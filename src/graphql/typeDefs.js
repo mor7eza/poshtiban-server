@@ -79,11 +79,23 @@ module.exports = gql`
     CHANGE_DEPARTMENT
   }
 
-  type Query{
-      login
+  type AuthToken {
+    token: String
   }
 
-  type Mutation{
-      register
+  type ErrorResponse {
+    errCode: Int
+    errDesc: String
+    fields: [String]
+  }
+
+  union Result = AuthToken | ErrorResponse
+
+  type Query {
+    login(email: String, password: String): Result
+  }
+
+  type Mutation {
+    register(first_name: String, last_name: String, email: String, password: String, confirm_password: String): Result
   }
 `;
