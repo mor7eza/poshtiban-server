@@ -8,8 +8,21 @@ module.exports = gql`
     email: String
     password: String
     role: RoleEnum
+    gender: Boolean
+    birthday: String
+    mobile: String
     createdAt: String
     updatedAt: String
+  }
+
+  input UserInput {
+    id: String
+    first_name: String
+    last_name: String
+    role: RoleEnum
+    gender: Boolean
+    birthday: String
+    mobile: String
   }
 
   type Ticket {
@@ -89,13 +102,23 @@ module.exports = gql`
     fields: [String]
   }
 
+  type MutationResponse {
+    code: Int
+    success: Boolean
+    message: String
+  }
+
   union Result = AuthToken | ErrorResponse
 
   type Query {
-    login(email: String, password: String): Result
+    getUsers: [User]
+    getUser(id: String): User
   }
 
   type Mutation {
+    login(email: String, password: String): Result
     register(first_name: String, last_name: String, email: String, password: String, confirm_password: String): Result
+    deleteUser(id: String): MutationResponse
+    editUser(user: UserInput): MutationResponse
   }
 `;
