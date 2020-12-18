@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 
 const User = require("../../models/User");
+const Log = require("../../models/Log");
 const { generateToken } = require("../../utils/helpers");
 
 module.exports = {
@@ -40,6 +41,8 @@ module.exports = {
       });
       await user.save();
       const token = generateToken(user);
+      const log = new Log({ user, action: "REGISTERED" });
+      await log.save();
       return { token };
     },
     deleteUser: async (_, { id }) => {

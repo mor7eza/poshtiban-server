@@ -33,9 +33,17 @@ module.exports = gql`
     status: StatusEnum
     comments: [Comment]
     user: User
-    department: Department
+    department: String
+    client: Client
     createdAt: String
     updatedAt: String
+  }
+
+  type Client {
+    osName: String
+    osVersion: String
+    browserName: String
+    browserVersion: String
   }
 
   type Log {
@@ -57,12 +65,8 @@ module.exports = gql`
 
   type Comment {
     user: User
+    body: String
     createdAt: String
-  }
-
-  type Department {
-    id: ID
-    department: String
   }
 
   enum RoleEnum {
@@ -85,7 +89,7 @@ module.exports = gql`
     CLOSED
   }
   enum ActionEnum {
-    CREATED
+    REGISTERED
     REPLIED
     CHANGE_STATUS
     CHANGE_PRIORITY
@@ -113,6 +117,8 @@ module.exports = gql`
   type Query {
     getUsers: [User]
     getUser(id: String): User
+    getTickets: [Ticket]
+    getTicket(ticketId: String): Ticket
   }
 
   type Mutation {
@@ -120,5 +126,17 @@ module.exports = gql`
     register(first_name: String, last_name: String, email: String, password: String, confirm_password: String): Result
     deleteUser(id: String): MutationResponse
     editUser(user: UserInput): MutationResponse
+    createTicket(
+      userId: String
+      subject: String
+      priority: PriorityEnum
+      status: StatusEnum
+      body: String
+      department: String
+      osName: String
+      osVersion: String
+      browserName: String
+      browserVersion: String
+    ): MutationResponse
   }
 `;

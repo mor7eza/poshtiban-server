@@ -9,11 +9,18 @@ const ticketSchema = new Schema(
     comments: [
       {
         user: { type: ObjectId, ref: "User" },
+        body: String,
         createdAt: { type: String, default: Date.now }
       }
     ],
     user: { type: ObjectId, ref: "User" },
-    department: { type: ObjectId, ref: "Department" }
+    department: String,
+    client: {
+      osName: String,
+      osVersion: String,
+      browserName: String,
+      browserVersion: String
+    }
   },
   { timestamps: true }
 );
