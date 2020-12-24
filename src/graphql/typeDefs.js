@@ -56,7 +56,8 @@ module.exports = gql`
   }
 
   type Todo {
-    todo: String
+    id: ID
+    body: String
     completed: Boolean
     user: User
     createdAt: String
@@ -119,6 +120,8 @@ module.exports = gql`
     getUser(id: String): User
     getTickets: [Ticket]
     getTicket(ticketId: String): Ticket
+    getDashboardStatus: [Int]
+    getTodos(userId: String): [Todo]
   }
 
   type Mutation {
@@ -138,5 +141,10 @@ module.exports = gql`
       browserName: String
       browserVersion: String
     ): MutationResponse
+    addComment(userId: String, ticketId: String, body: String): MutationResponse
+    changeTicketPriority(ticketId: String, priority: PriorityEnum): MutationResponse
+    changeTicketStatus(ticketId: String, status: StatusEnum): MutationResponse
+    addTodo(userId: String, body: String): MutationResponse
+    completeTodo(todoId: String): MutationResponse
   }
 `;

@@ -2,8 +2,8 @@ const { ObjectId, Schema, model } = require("mongoose");
 
 const todoSchema = new Schema(
   {
-    todo: String,
-    completed: Boolean,
+    body: String,
+    completed: { type: Boolean, default: false },
     user: { type: ObjectId, ref: "User" }
   },
   { timestamps: true }
