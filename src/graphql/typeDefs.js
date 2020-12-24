@@ -70,6 +70,12 @@ module.exports = gql`
     createdAt: String
   }
 
+  type DepartmentStatus {
+    name: String
+    open: Int
+    pending: Int
+  }
+
   enum RoleEnum {
     ADMIN
     AGENT
@@ -122,6 +128,7 @@ module.exports = gql`
     getTicket(ticketId: String): Ticket
     getDashboardStatus: [Int]
     getTodos(userId: String): [Todo]
+    getDepartmentsStatus: [DepartmentStatus]
   }
 
   type Mutation {

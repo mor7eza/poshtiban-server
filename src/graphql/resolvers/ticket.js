@@ -1,4 +1,5 @@
 const Ticket = require("../../models/Ticket");
+const { find } = require("../../models/User");
 const User = require("../../models/User");
 
 module.exports = {
@@ -17,6 +18,21 @@ module.exports = {
       const resolved = await Ticket.countDocuments({ status: "RESOLVED" });
       const closed = await Ticket.countDocuments({ status: "CLOSED" });
       return [open, pending, resolved, closed];
+    },
+    getDepartmentsStatus: async () => {
+      const tickets = await Ticket.find({}, "department status");
+      const departments = await Ticket.distinct("department");
+      const departmentsStatus = [];
+      departments.map((department) => {
+        let open = 0;
+        let pending = 0;
+        tickets.map((ticket) => {
+          if (ticket.department === department && ticket.status === "OPEN") open++;
+          if (ticket.department === department && ticket.status === "PENDING") pending++;
+        });
+        departmentsStatus.push({ name: department, open, pending });
+      });
+      return departmentsStatus;
     }
   },
   Mutation: {
