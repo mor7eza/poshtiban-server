@@ -16,7 +16,7 @@ try {
   server.listen({ port: PORT }).then(({ url }) => {
     console.log(`Server is running on ${url}`);
     return mongoose
-      .connect(MONGO_URI_DEV, {
+      .connect(MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
