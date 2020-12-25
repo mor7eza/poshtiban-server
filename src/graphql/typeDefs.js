@@ -129,6 +129,7 @@ module.exports = gql`
     getDashboardStatus: [Int]
     getTodos(userId: String): [Todo]
     getDepartmentsStatus: [DepartmentStatus]
+    getChartData: [String]
   }
 
   type Mutation {

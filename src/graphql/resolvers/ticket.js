@@ -1,6 +1,6 @@
 const Ticket = require("../../models/Ticket");
-const { find } = require("../../models/User");
 const User = require("../../models/User");
+const { DateTime } = require("luxon");
 
 module.exports = {
   Query: {
@@ -33,6 +33,15 @@ module.exports = {
         departmentsStatus.push({ name: department, open, pending });
       });
       return departmentsStatus;
+    },
+    getChartData: async () => {
+      const tickets = await Ticket.find({}, "createdAt");
+      const ticketsDates = tickets.map((ticket) => {
+        const date = new Date(ticket.createdAt);
+        const newDate = DateTime.fromISO(date.toISOString()).toISODate();
+        return newDate;
+      });
+      return ticketsDates;
     }
   },
   Mutation: {
